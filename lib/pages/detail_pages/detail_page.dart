@@ -4,6 +4,7 @@ import 'package:book_reader_app/colors/app_colors.dart';
 import 'package:book_reader_app/constants/sizes.dart';
 import 'package:book_reader_app/widgets/expandable_text_widget.dart';
 import 'package:book_reader_app/widgets/small_buttons_circular.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:book_reader_app/pages/detail_pages/app_button.dart';
 import 'package:book_reader_app/pages/pdf_view.dart';
@@ -12,9 +13,8 @@ import 'package:book_reader_app/widgets/responsive_button.dart';
 import '../../widgets/app_text.dart';
 
 class DetailPage extends StatefulWidget {
-  final tabItems;
-  int i;
-  DetailPage({super.key, required this.tabItems, required this.i});
+  QueryDocumentSnapshot doc;
+  DetailPage({super.key, required this.doc});
 
   @override
   State<DetailPage> createState() => _DetailPageState();
@@ -22,7 +22,16 @@ class DetailPage extends StatefulWidget {
 
 class _DetailPageState extends State<DetailPage> {
   int selectedIndexRating = -1;
-  bool isFavouriteTapped = false;
+  int previousIndexRating = -1;
+  bool liked = false;
+
+  @override
+  void initState() {
+    super.initState();
+    liked = widget.doc["liked"] == 1 ? true : false;
+    selectedIndexRating = widget.doc["my_rating"] - 1;
+    previousIndexRating = widget.doc["my_rating"] - 2;
+  }
 
   void back() {
     Navigator.pop(context, true);
@@ -30,12 +39,11 @@ class _DetailPageState extends State<DetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    int i = widget.i;
+    QueryDocumentSnapshot doc = widget.doc;
     Color black = Colors.black;
     Color white = Colors.white;
     Color grey = Colors.grey;
     Color blue = Colors.blue.shade700;
-    List tabItems = widget.tabItems;
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
 
@@ -54,7 +62,7 @@ class _DetailPageState extends State<DetailPage> {
                   height: height * 0.42,
                   decoration: BoxDecoration(
                       image: DecorationImage(
-                    image: AssetImage(tabItems[i]["img"]),
+                    image: NetworkImage(doc["img"]),
                     fit: BoxFit.cover,
                   )),
                 )),
@@ -88,7 +96,7 @@ class _DetailPageState extends State<DetailPage> {
                 child: Container(
                   height: height * 0.74,
                   width: width,
-                  margin: EdgeInsets.only(bottom: Sizes.screenHeight/5),
+                  margin: EdgeInsets.only(bottom: Sizes.screenHeight / 5),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(40),
@@ -108,8 +116,7 @@ class _DetailPageState extends State<DetailPage> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            AppLargeText(
-                                text: tabItems[i]["title"], color: black),
+                            AppLargeText(text: doc["title"], color: black),
                             AppText(
                                 text: "Read more",
                                 color: grey.withOpacity(0.7)),
@@ -127,8 +134,7 @@ class _DetailPageState extends State<DetailPage> {
                                 icon: Icon(Icons.location_pin, color: blue)),
                             GestureDetector(
                                 child: AppText(
-                                    text: tabItems[i]["location"],
-                                    color: blue)),
+                                    text: doc["location"], color: blue)),
                           ],
                         ),
                       ),
@@ -141,8 +147,7 @@ class _DetailPageState extends State<DetailPage> {
                             Wrap(
                               children: List.generate(5, (index) {
                                 double size = Sizes.screenHeight / 30;
-                                double stars =
-                                    double.parse(tabItems[i]["rating"]);
+                                double stars = double.parse(doc["rating"]);
                                 int wholeRating = stars.floor();
                                 int fractRating =
                                     ((stars - wholeRating) * 10).ceil();
@@ -177,7 +182,7 @@ class _DetailPageState extends State<DetailPage> {
                             ),
                             SizedBox(width: Sizes.screenHeight / 120),
                             AppText(
-                              text: tabItems[i]["rating"],
+                              text: doc["rating"],
                               color: blue,
                               size: Sizes.screenHeight / 50,
                             )
@@ -205,6 +210,25 @@ class _DetailPageState extends State<DetailPage> {
                               onTap: () {
                                 setState(() {
                                   selectedIndexRating = index;
+                                  if (selectedIndexRating !=
+                                      previousIndexRating) {
+                                    FirebaseFirestore.instance
+                                        .collection("book_details")
+                                        .doc(doc.id)
+                                        .update({
+                                      "my_rating": selectedIndexRating + 1,
+                                    });
+                                    previousIndexRating = selectedIndexRating;
+                                  } else {
+                                    FirebaseFirestore.instance
+                                        .collection("book_details")
+                                        .doc(doc.id)
+                                        .update({
+                                      "my_rating": -1,
+                                    });
+                                    selectedIndexRating = -1;
+                                    previousIndexRating = -2;
+                                  }
                                 });
                               },
                               child: Container(
@@ -239,9 +263,12 @@ class _DetailPageState extends State<DetailPage> {
                             child: Column(
                               children: [
                                 Container(
-                                  margin: EdgeInsets.only(bottom: Sizes.screenHeight/5.5),
-                                  padding: EdgeInsets.only(left: Sizes.screenHeight/35, right: Sizes.screenWidth/35),
-                                  child: ExpandableText(text: tabItems[i]["about"])),
+                                    margin: EdgeInsets.only(
+                                        bottom: Sizes.screenHeight / 5.5),
+                                    padding: EdgeInsets.only(
+                                        left: Sizes.screenHeight / 35,
+                                        right: Sizes.screenWidth / 35),
+                                    child: ExpandableText(text: doc["about"])),
                               ],
                             )),
                       ),
@@ -264,16 +291,31 @@ class _DetailPageState extends State<DetailPage> {
             GestureDetector(
               onTap: () {
                 setState(() {
-                  isFavouriteTapped = !isFavouriteTapped;
+                  liked = !liked;
+                  if (widget.doc["liked"] == 0) {
+                    FirebaseFirestore.instance
+                        .collection("book_details")
+                        .doc(doc.id)
+                        .update({
+                      "liked": 1,
+                    });
+                  } else {
+                    FirebaseFirestore.instance
+                        .collection("book_details")
+                        .doc(doc.id)
+                        .update({
+                      "liked": 0,
+                    });
+                  }
                 });
               },
               child: Container(
                 padding: EdgeInsets.only(left: Sizes.screenWidth / 25),
                 child: AppButton(
                   size: Sizes.screenHeight / 15,
-                  color: isFavouriteTapped ? white : black,
-                  backgroundColor: isFavouriteTapped ? Colors.pink : white,
-                  borderColor: isFavouriteTapped ? Colors.transparent : black,
+                  color: liked ? white : black,
+                  backgroundColor: liked ? Colors.pink : white,
+                  borderColor: liked ? Colors.transparent : black,
                   isIcon: true,
                   icon: Icons.favorite_border,
                 ),
@@ -285,7 +327,7 @@ class _DetailPageState extends State<DetailPage> {
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(
                   builder: (context) {
-                    return PdfViews(i: i, tabItems: tabItems);
+                    return PdfViews(doc: doc);
                   },
                 ));
               },

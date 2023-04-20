@@ -1,13 +1,13 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/app_text.dart';
 
 class MenuPageListItems extends StatelessWidget {
-  final tabItems;
-  final i;
-  MenuPageListItems({super.key, this.tabItems, required this.i});
+  QueryDocumentSnapshot doc;
+  MenuPageListItems({super.key, required this.doc});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class MenuPageListItems extends StatelessWidget {
             borderRadius: BorderRadius.circular(20),
             color: Colors.white,
             image: DecorationImage(
-              image: AssetImage(tabItems[i]["img"]),
+              image: NetworkImage(doc["img"]),
               fit: BoxFit.fill,
             ),
           ),
@@ -35,7 +35,7 @@ class MenuPageListItems extends StatelessWidget {
             borderRadius: BorderRadius.circular(20),
           ),
           child: AppText(
-              text: tabItems[i]["title"], color: Colors.white, size: 18),
+              text: doc["title"], color: Colors.white, size: 18),
         ),
       ],
     );

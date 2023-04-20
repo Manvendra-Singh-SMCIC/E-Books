@@ -1,19 +1,19 @@
-// ignore_for_file: must_be_immutable
+// ignore_for_file: must_be_immutable, depend_on_referenced_packages, avoid_print
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cached_pdfview/flutter_cached_pdfview.dart';
 
 class PdfViews extends StatelessWidget {
-  final tabItems;
-  int i;
-  PdfViews({super.key, this.tabItems, required this.i});
+  QueryDocumentSnapshot doc;
+  PdfViews({super.key, required this. doc});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.deepPurple,
-        title: Text(tabItems[i]["title"]),
+        title: Text(doc["title"]),
       ),
       body: Container(
         child: PDF(
@@ -26,7 +26,7 @@ class PdfViews extends StatelessWidget {
         onPageError: (page, error) {
           print('$page: ${error.toString()}');
         },
-            ).cachedFromUrl('https://drive.google.com/uc?export=download&id=17Lw4Q2GHbuZJmB8WS3pNpRnC1Zbvc3oc')
+            ).cachedFromUrl(doc["pdf"])
       ),
     );
   }
