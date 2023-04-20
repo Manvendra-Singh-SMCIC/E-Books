@@ -1,0 +1,42 @@
+[
+    {
+        "title": "Green",
+        "date": "6-4-2023",
+        "about": "Green is book on the adventure of a man with immense love for plants with an unexpected end. He ventures inside  cave system where what he finds leaves him amazed. Read to find out what happens throughout the story. Green is book on the adventure of a man with immense love for plants with an unexpected end. He ventures inside  cave system where what he finds leaves him amazed. Read to find out what happens throughout the story.",
+        "url": "D:/AndroidStudioProjects/reader/lib/pdfs/GREEN.pdf",
+        "author": "Manvendra Singh",
+        "location": "Jaipur, Rajasthan",
+        "rating": "4.3",
+        "img": "lib/pages/images/green.jpg"
+    },
+    {
+        "title": "The Fortunate",
+        "date": "6-4-2023",
+        "about": "A man finds a magical quill which can tell fortune but in a strange way.",
+        "url": "D:/AndroidStudioProjects/reader/lib/pdfs/GREEN.pdf",
+        "author": "Manvendra Singh",
+        "location": "Jaipur, Rajasthan",
+        "rating": "3.5",
+        "img": "lib/pages/images/quill.jpg"
+    },
+    {
+        "title": "The Fall",
+        "date": "6-4-2023",
+        "about": "Samantha discore a passance to another world from her basement.",
+        "url": "D:/AndroidStudioProjects/reader/lib/pdfs/GREEN.pdf",
+        "author": "Manvendra Singh",
+        "location": "Jaipur, Rajasthan",
+        "rating": "4.7",
+        "img": "lib/pages/images/basement.jpg"
+    },
+    {
+        "title": "Lily",
+        "date": "6-4-2023",
+        "about": "A man has to baby-sit young Lly in a magnificient mansion but eventually finds out its dark secrets.",
+        "url": "D:/AndroidStudioProjects/reader/lib/pdfs/GREEN.pdf",
+        "author": "Manvendra Singh",
+        "location": "Jaipur, Rajasthan",
+        "rating": "3.9",
+        "img": "lib/pages/images/lily.jpg"
+    }
+]

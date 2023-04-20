@@ -1,0 +1,26 @@
+[
+    {
+        "title": "Fantasy",
+        "sub_title": "Explore",
+        "text": "Explore the world of Fantasy and find amazing places you never new existed.",
+        "img": "lib/images/welcome1.webp"
+    },
+    {
+        "title": "Magic",
+        "sub_title": "Experience",
+        "text": "Experience the magic of the wizards and the witches. The sorcerer and the wizards have a lot to show.",
+        "img": "lib/images/welcome2.webp"
+    },
+    {
+        "title": "Thrill",
+        "sub_title": "Enchanted",
+        "text": "Enchanted your mind with the awe-striking description of lands unseen.",
+        "img": "lib/images/welcome3.webp"
+    },
+    {
+        "title": "Adventure",
+        "sub_title": "Dwell",
+        "text": "Dwell in the lovely places you could have only imagined.",
+        "img": "lib/images/welcome4.webp"
+    }
+]

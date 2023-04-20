@@ -1,0 +1,22 @@
+[
+    {
+        "title": "Explore",
+        "url": "D:/AndroidStudioProjects/reader/lib/pdfs/GREEN.pdf",
+        "img": "lib/pages/smallTabImages/explore.png"
+    },
+    {
+        "title": "Write",
+        "url": "D:/AndroidStudioProjects/reader/lib/pdfs/GREEN.pdf",
+        "img": "lib/pages/smallTabImages/write.png"
+    },
+    {
+        "title": "Contact",
+        "url": "D:/AndroidStudioProjects/reader/lib/pdfs/GREEN.pdf",
+        "img": "lib/pages/smallTabImages/contact.png"
+    },
+    {
+        "title": "Read",
+        "url": "D:/AndroidStudioProjects/reader/lib/pdfs/GREEN.pdf",
+        "img": "lib/pages/smallTabImages/read.png"
+    }
+]
