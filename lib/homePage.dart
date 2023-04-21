@@ -34,7 +34,8 @@ class _HomePageState extends State<HomePage> {
                 itemCount: snapshot.data!.docs.length,
                 scrollDirection: Axis.vertical,
                 itemBuilder: (_, i) {
-                  btnColors.add(HexColor.fromHex(snapshot.data!.docs[i]['btn_color']));
+                  btnColors.add(
+                      HexColor.fromHex(snapshot.data!.docs[i]['btn_color']));
                   return Container(
                     width: double.maxFinite,
                     height: double.maxFinite,
@@ -55,16 +56,20 @@ class _HomePageState extends State<HomePage> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   AppLargeText(
-                                      text: snapshot.data!.docs[i]['title']),
+                                    text: snapshot.data!.docs[i]['title'],
+                                    fontfamily: "Samantha",
+                                  ),
                                   AppText(
-                                      text: snapshot.data!.docs[i]
-                                          ['sub_title']),
+                                    text: snapshot.data!.docs[i]['sub_title'],
+                                    fontFamily: "Samantha",
+                                  ),
                                   SizedBox(height: 20),
                                   Container(
                                     width: 300,
                                     child: AppText(
                                       text: snapshot.data!.docs[i]['text'],
                                       size: 14,
+                                      fontFamily: "Samantha",
                                     ),
                                   ),
                                   SizedBox(height: 130),
@@ -78,6 +83,7 @@ class _HomePageState extends State<HomePage> {
                                           MediaQuery.of(context).size.height *
                                               4 /
                                               20),
+                                  // Dot Indicator
                                   Column(
                                     children: List.generate(
                                         snapshot.data!.docs.length, (index) {
@@ -89,8 +95,8 @@ class _HomePageState extends State<HomePage> {
                                           borderRadius:
                                               BorderRadius.circular(5),
                                           color: (index == i)
-                                              ? Colors.blue
-                                              : Colors.blue.withOpacity(0.3),
+                                              ? Colors.white
+                                              : Colors.white.withOpacity(0.3),
                                         ),
                                       );
                                     }),
@@ -147,4 +153,5 @@ extension HexColor on Color {
     if (hexString.length == 6 || hexString.length == 7) buffer.write('ff');
     buffer.write(hexString.replaceFirst('#', ''));
     return Color(int.parse(buffer.toString(), radix: 16));
-  }}
+  }
+}

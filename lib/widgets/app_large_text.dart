@@ -12,7 +12,7 @@ class AppLargeText extends StatelessWidget {
       {super.key,
       required this.text,
       this.color = Colors.white,
-      this.fontfamily = "Samantha",
+      this.fontfamily = "",
       this.size = 30}) {}
 
   @override

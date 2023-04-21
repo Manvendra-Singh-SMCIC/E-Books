@@ -1,4 +1,6 @@
-// ignore_for_file: must_be_immutable
+// ignore_for_file: must_be_immutable, avoid_print
+
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 
@@ -11,17 +13,18 @@ class AppText extends StatelessWidget {
   final dynamic fontFamily;
   final Color color;
 
-  AppText(
-      {super.key,
-      required this.text,
-      this.fontFamily = "Samantha",
-      this.color = AppColors.white,
-      this.size = 16});
+  AppText({
+    super.key,
+    required this.text,
+    this.fontFamily = "",
+    this.color = AppColors.white,
+    this.size = 16,
+  });
 
   @override
   Widget build(BuildContext context) {
     if (size == 16) {
-      size = Sizes.screenHeight/52;
+      size = Sizes.screenHeight / 52;
     }
     return Text(
       text,
