@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_email_sender/flutter_email_sender.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../pages/my_stories/story_reader.dart';
 
@@ -9,12 +9,26 @@ class PopupMenu extends StatelessWidget {
   final Widget? icon;
   final Function()? onTap;
   final QueryDocumentSnapshot doc;
-  const PopupMenu(
-      {super.key,
-      required this.menuList,
-      this.icon,
-      required this.doc,
-      required this.onTap});
+  const PopupMenu({
+    super.key,
+    required this.menuList,
+    this.icon,
+    required this.doc,
+    required this.onTap,
+  });
+
+  Future launchEmail({
+    required String toEmail,
+    required String subject,
+    required String message,
+  }) async {
+    final url =
+        'mailto:$toEmail?subject=${Uri.encodeFull(subject)}&body=${Uri.encodeFull(message)}';
+
+    if (await canLaunch(url)) {
+      await launch(url);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,17 +53,11 @@ class PopupMenu extends StatelessWidget {
             ));
             break;
           case "Send":
-            final Email email = Email(
-              body: doc["note_content"],
-              subject: doc["note_title"],
-              recipients: ["12a.manvendrasingh@gmail.com"],
-              //cc: ['cc@example.com'],
-              //bcc: ['bcc@example.com'],
-              //attachmentPaths: ['/path/to/attachment.zip'],
-              isHTML: false,
+            launchEmail(
+              toEmail: "12a.manvendrasingh@gmail.com",
+              subject: "Story",
+              message: doc["note_title"] + "\n" + doc["note_content"],
             );
-
-            await FlutterEmailSender.send(email);
 
             break;
         }

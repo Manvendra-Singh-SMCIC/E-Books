@@ -76,7 +76,7 @@ class _StoryEditorState extends State<StoryEditor> {
                     hintStyle: TextStyle(fontSize: Sizes.screenWidth / 20),
                   ),
                   style: TextStyle(
-                      fontSize: Sizes.screenWidth / 20, fontFamily: "Samantha"),
+                      fontSize: Sizes.screenWidth / 20),
                 ),
               ),
             ),

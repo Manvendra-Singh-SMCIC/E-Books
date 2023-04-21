@@ -37,7 +37,7 @@ class _WriteMyStoriesState extends State<WriteMyStories> {
       ),
       body: Container(
         color: Colors.grey.withOpacity(0.05),
-        padding: const EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(Sizes.screenHeight/50),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
