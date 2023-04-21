@@ -64,37 +64,39 @@ Widget storyCard(Function()? onTap, QueryDocumentSnapshot doc) {
         right: Sizes.screenWidth / 77.5 - Sizes.screenWidth / 177.5,
         top: Sizes.screenWidth / 77.5 - Sizes.screenWidth / 177.5,
         child: PopupMenu(
-          menuList: [
+          onTap: onTap,
+          doc: doc,
+          menuList: const [
             PopupMenuItem(
+                value: "Delete",
                 child: InkWell(
-                  onTap: onTap,
-                  child: const ListTile(
-                              leading: Icon(
-                  CupertinoIcons.delete,
-                              ),
-                              title: Text("Delete"),
-                            ),
+                  child: ListTile(
+                    leading: Icon(
+                      CupertinoIcons.delete,
+                    ),
+                    title: Text("Delete"),
+                  ),
                 )),
             PopupMenuItem(
+              value: "Edit",
                 child: InkWell(
-                  onTap: onTap,
-                  child: const ListTile(
-                              leading: Icon(
+              child: ListTile(
+                leading: Icon(
                   CupertinoIcons.pen,
-                              ),
-                              title: Text("Edit"),
-                            ),
-                )),
+                ),
+                title: Text("Edit"),
+              ),
+            )),
             PopupMenuItem(
+               value: "Send",
                 child: InkWell(
-                  onTap: onTap,
-                  child: const ListTile(
-                              leading: Icon(
+              child: ListTile(
+                leading: Icon(
                   CupertinoIcons.arrow_2_circlepath,
-                              ),
-                              title: Text("Send to Owner"),
-                            ),
-                )),
+                ),
+                title: Text("Send to Owner"),
+              ),
+            )),
           ],
           icon: Container(
             width: Sizes.screenWidth / 16,

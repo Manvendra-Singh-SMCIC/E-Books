@@ -78,7 +78,6 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
                       if (tapped) {
                         setState(() {
                           String date = DateTime.now().toString();
-                          print('kdkm,');
                           FirebaseFirestore.instance
                               .collection("mystories")
                               .doc(widget.doc["id"])
@@ -134,6 +133,7 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
                 : Container(
                     child: Center(
                     child: TextField(
+                      textAlign: TextAlign.center,
                       controller: _titleController,
                       decoration: const InputDecoration(
                           border: InputBorder.none, hintText: "Story Title"),

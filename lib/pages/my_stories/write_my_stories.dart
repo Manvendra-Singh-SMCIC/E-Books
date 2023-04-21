@@ -35,7 +35,8 @@ class _WriteMyStoriesState extends State<WriteMyStories> {
           ),
         ),
       ),
-      body: Padding(
+      body: Container(
+        color: Colors.grey.withOpacity(0.05),
         padding: const EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,

@@ -36,7 +36,6 @@ class _StoryEditorState extends State<StoryEditor> {
               style: TextStyle(
                 color: Colors.black,
                 fontSize: width / 15,
-                fontFamily: "Samantha",
               )),
         ),
       ),
@@ -59,7 +58,6 @@ class _StoryEditorState extends State<StoryEditor> {
               style: TextStyle(
                 fontSize: Sizes.screenWidth / 12,
                 fontWeight: FontWeight.bold,
-                fontFamily: "Samantha",
               ),
             ),
             SizedBox(height: Sizes.screenHeight / 100),
@@ -78,8 +76,7 @@ class _StoryEditorState extends State<StoryEditor> {
                     hintStyle: TextStyle(fontSize: Sizes.screenWidth / 20),
                   ),
                   style: TextStyle(
-                      fontSize: Sizes.screenWidth / 20,
-                      fontFamily: "Samantha"),
+                      fontSize: Sizes.screenWidth / 20, fontFamily: "Samantha"),
                 ),
               ),
             ),
@@ -113,19 +110,19 @@ class _StoryEditorState extends State<StoryEditor> {
               (error) => print("Failed to add new note due to $error"));
         },
         child: Container(
-          width: Sizes.screenWidth/6,
-          height: Sizes.screenWidth/6,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(Sizes.screenWidth/12),
-            color: AppStyle.cardsColor[color_id],
-            boxShadow: [
-              BoxShadow(
-                  color: Colors.black12,
-                  spreadRadius: 2.5,
-                  blurRadius: Sizes.screenWidth / 300)
-            ],
-          ),
-          child: const Icon(Icons.check, color: Colors.grey)),
+            width: Sizes.screenWidth / 6,
+            height: Sizes.screenWidth / 6,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(Sizes.screenWidth / 12),
+              color: AppStyle.cardsColor[color_id],
+              boxShadow: [
+                BoxShadow(
+                    color: Colors.black12,
+                    spreadRadius: 2.5,
+                    blurRadius: Sizes.screenWidth / 300)
+              ],
+            ),
+            child: const Icon(Icons.check, color: Colors.grey)),
       ),
     );
   }
