@@ -7,6 +7,8 @@ import 'package:book_reader_app/constants/sizes.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+import '../../colors/app_colors.dart';
+
 class StoryEditor extends StatefulWidget {
   const StoryEditor({super.key});
 
@@ -27,11 +29,11 @@ class _StoryEditorState extends State<StoryEditor> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0.0,
+        backgroundColor: AppColors.themeColor,
+        elevation: 2.0,
         iconTheme: const IconThemeData(color: Colors.black),
         title: Padding(
-          padding: EdgeInsets.only(left: width / 22, top: height / 70),
+          padding: EdgeInsets.only(top: height / 70),
           child: Text("Add a new story here",
               style: TextStyle(
                 color: Colors.black,
@@ -114,7 +116,7 @@ class _StoryEditorState extends State<StoryEditor> {
             height: Sizes.screenWidth / 6,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(Sizes.screenWidth / 12),
-              color: AppStyle.cardsColor[color_id],
+              color: AppColors.themeColor,
               boxShadow: [
                 BoxShadow(
                     color: Colors.black12,
@@ -122,7 +124,7 @@ class _StoryEditorState extends State<StoryEditor> {
                     blurRadius: Sizes.screenWidth / 300)
               ],
             ),
-            child: const Icon(Icons.check, color: Colors.grey)),
+            child: const Icon(Icons.check, color: Colors.white)),
       ),
     );
   }

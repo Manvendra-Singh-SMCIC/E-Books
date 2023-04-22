@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 
+import 'package:book_reader_app/colors/app_colors.dart';
 import 'package:book_reader_app/constants/sizes.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:book_reader_app/pages/my_stories/write_my_stories.dart';
@@ -71,7 +72,7 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
             padding: EdgeInsets.only(top: 30, left: 15, right: 15),
             child: Row(
               children: [
-                Icon(Icons.menu, size: 30, color: Colors.black),
+                Icon(Icons.menu, size: Sizes.screenWidth/12, color: AppColors.themeColor),
                 Expanded(child: Container()),
                 Container(
                   margin: EdgeInsets.only(right: 5),
@@ -79,7 +80,7 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
                   height: 50,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    color: Colors.grey.withOpacity(0.1),
+                    color: AppColors.themeColor.withOpacity(0.3),
                     image: DecorationImage(
                       image: NetworkImage(
                           "https://drive.google.com/uc?export=view&id=1gfpCHbQhgFxcQSuCyXYd_reoVn4FyxSe"),
@@ -126,35 +127,38 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
             child: TabBarView(
               controller: _tabController,
               children: [
-               StreamBuilder<QuerySnapshot>(
-                stream: FirebaseFirestore.instance.collection("book_details").snapshots(),
-                builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                  if(snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                  if(snapshot.hasData) {
-                    return  ListView.builder(
-                    itemCount: snapshot.data!.docs.length,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, i) {
-                      return GestureDetector(
-                        onTap: () {
-                          Navigator.push(context, MaterialPageRoute(
-                            builder: (context) {
-                              return DetailPage(doc: snapshot.data!.docs[i]);
-                            },
-                          ));
-                        },
-                        child:
-                            MenuPageListItems(doc: snapshot.data!.docs[i]),
+                StreamBuilder<QuerySnapshot>(
+                  stream: FirebaseFirestore.instance
+                      .collection("book_details")
+                      .snapshots(),
+                  builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
                       );
-                    });
-                  }
-                  return Center(child: Text("Offline"));
-                },
-               ),
+                    }
+                    if (snapshot.hasData) {
+                      return ListView.builder(
+                          itemCount: snapshot.data!.docs.length,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, i) {
+                            return GestureDetector(
+                              onTap: () {
+                                Navigator.push(context, MaterialPageRoute(
+                                  builder: (context) {
+                                    return DetailPage(
+                                        doc: snapshot.data!.docs[i]);
+                                  },
+                                ));
+                              },
+                              child: MenuPageListItems(
+                                  doc: snapshot.data!.docs[i]),
+                            );
+                          });
+                    }
+                    return Center(child: Text("Offline"));
+                  },
+                ),
                 Text("Hi"),
                 Text("Hi"),
               ],
@@ -167,11 +171,24 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                AppLargeText(
-                  text: "Find more",
-                  size: 22,
-                  fontfamily: "Kaushan",
-                  color: black,
+                Wrap(
+
+                  children: [Container(
+                    height: 35,
+                    decoration: BoxDecoration(
+                      color: AppColors.themeColor,
+                      borderRadius: BorderRadius.circular(17.5)
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 8, right: 8, top: 3, bottom: 3),
+                      child: AppLargeText(
+                        text: "Find more",
+                        size: 22,
+                        fontfamily: "Kaushan",
+                        color: black,
+                      ),
+                    ),
+                  ),]
                 ),
                 AppText(
                     text: "See all",
@@ -186,265 +203,78 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
           Container(
             height: 130,
             padding: EdgeInsets.only(left: 10, top: 20),
-            child: ListView.builder(
-              itemCount: smallTabs.length,
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, i) {
-                return Container(
-                  child: Column(
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(context, MaterialPageRoute(
-                            builder: (context) {
-                              return WriteMyStories();
-                            },
-                          ));
-                        },
-                        child: Container(
-                          margin: EdgeInsets.only(left: 20, right: 20),
-                          height: 80,
-                          width: 80,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: grey.withOpacity(0.1),
-                              image: DecorationImage(
-                                image: AssetImage(smallTabs[i]["img"]),
-                                fit: BoxFit.fill,
-                              )),
-                        ),
-                      ),
-                      Expanded(
-                        child: SingleChildScrollView(
-                          child: Container(
-                            margin: EdgeInsets.only(top: Sizes.screenHeight/60),
-                            child: Center(
-                                child: Text(
-                              smallTabs[i]["title"],
-                              style: TextStyle(color: grey),
-                            )),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                );
-              },
-            ),
+            child: StreamBuilder<QuerySnapshot>(
+                stream: FirebaseFirestore.instance
+                    .collection("menu_page_small_icons")
+                    .snapshots(),
+                builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                  if (snapshot.hasData) {
+                    return ListView.builder(
+                      itemCount: snapshot.data!.docs.length,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, i) {
+                        QueryDocumentSnapshot doc = snapshot.data!.docs[i];
+                        return Column(
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(context, MaterialPageRoute(
+                                  builder: (context) {
+                                    return WriteMyStories();
+                                  },
+                                ));
+                              },
+                              child: Container(
+                                margin: EdgeInsets.only(left: 20, right: 20),
+                                height: 80,
+                                width: 80,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    color: AppColors.themeColor,
+                                    image: DecorationImage(
+                                      image: NetworkImage(doc["img"]),
+                                      fit: BoxFit.fill,
+                                    )),
+                              ),
+                            ),
+                            Expanded(
+                              child: Container(
+                                width: 80,
+                                height: 50,
+                                margin: EdgeInsets.only(
+                                    top: Sizes.screenHeight / 100),
+                                decoration: BoxDecoration(
+                                  color: AppColors.themeColor,
+                                  borderRadius: BorderRadius.circular(40),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.only(bottom: 1),
+                                  child: Center(
+                                      child: Text(
+                                    doc["title"],
+                                    style: TextStyle(color: black, fontWeight: FontWeight.bold),
+                                  )),
+                                ),
+                              ),
+                            )
+                          ],
+                        );
+                      },
+                    );
+                  }
+                  return Center(child: CircularProgressIndicator());
+                }),
           )
         ],
       ),
     );
   }
 }
-
-// class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
-//   List tabItems = [""];
-//   List smallTabs = [""];
-
-//   String profile_book_image = "lib/images/book_profile.png";
-
-//   Color black = Colors.black;
-//   Color grey = Colors.grey;
-//   Color white = Colors.white;
-
-//   @override
-//   void initState() {
-//     super.initState();
-
-//     readData();
-//   }
-
-//   readData() async {
-//     await DefaultAssetBundle.of(context)
-//         .loadString("json/books.json")
-//         .then((s) {
-//       setState(() {
-//         tabItems = json.decode(s);
-//       });
-//     });
-
-//     await DefaultAssetBundle.of(context)
-//         .loadString("json/menupage_tabs_small.json")
-//         .then((s) {
-//       setState(() {
-//         smallTabs = json.decode(s);
-//       });
-//     });
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     TabController _tabController = TabController(length: 3, vsync: this);
-
-//     return Scaffold(
-//       body: Column(
-//         crossAxisAlignment: CrossAxisAlignment.start,
-//         children: [
-//           //Read Title
-//           Container(
-//             padding: EdgeInsets.only(top: 10),
-//             child: Center(child: AppLargeText(text: "READ", color: black)),
-//           ),
-//           //Menu + User Icon
-//           Padding(
-//             padding: EdgeInsets.only(top: 30, left: 15, right: 15),
-//             child: Row(
-//               children: [
-//                 Icon(Icons.menu, size: 30, color: Colors.black),
-//                 Expanded(child: Container()),
-//                 Container(
-//                   margin: EdgeInsets.only(right: 5),
-//                   width: 50,
-//                   height: 50,
-//                   decoration: BoxDecoration(
-//                     borderRadius: BorderRadius.circular(10),
-//                     color: Colors.grey.withOpacity(0.1),
-//                     image: DecorationImage(
-//                       image: NetworkImage(
-//                           "https://drive.google.com/uc?export=view&id=1gfpCHbQhgFxcQSuCyXYd_reoVn4FyxSe"),
-//                       fit: BoxFit.cover,
-//                     ),
-//                   ),
-//                 )
-//               ],
-//             ),
-//           ),
-//           SizedBox(height: 30),
-//           //Discover
-//           Padding(
-//             padding: EdgeInsets.only(left: 15),
-//             child: AppLargeText(
-//               text: "Discover",
-//               color: Colors.black,
-//               fontfamily: "Kaushan",
-//             ),
-//           ),
-//           SizedBox(height: 30),
-//           //TabBar
-//           Container(
-//             child: TabBar(
-//               labelPadding: EdgeInsets.only(left: 20, right: 0),
-//               labelColor: black,
-//               indicator:
-//                   CircleTabIndicator(color: grey.withOpacity(0.8), radius: 4),
-//               indicatorSize: TabBarIndicatorSize.label,
-//               controller: _tabController,
-//               tabs: [
-//                 Tab(text: "Books"),
-//                 Tab(text: "Authors"),
-//                 Tab(text: "Genre"),
-//               ],
-//             ),
-//           ),
-//           SizedBox(height: 10),
-//           //TabBar List
-//           Container(
-//             padding: EdgeInsets.only(left: 20),
-//             height: 220,
-//             width: double.maxFinite,
-//             child: TabBarView(
-//               controller: _tabController,
-//               children: [
-//                 ListView.builder(
-//                     itemCount: tabItems.length,
-//                     scrollDirection: Axis.horizontal,
-//                     itemBuilder: (context, i) {
-//                       int ind = i;
-//                       return GestureDetector(
-//                         onTap: () {
-//                           Navigator.push(context, MaterialPageRoute(
-//                             builder: (context) {
-//                               return DetailPage(tabItems: tabItems, i: ind);
-//                             },
-//                           ));
-//                         },
-//                         child:
-//                             MenuPageListItems(tabItems: tabItems, i: ind),
-//                       );
-//                     }),
-//                 Text("Hi"),
-//                 Text("Hi"),
-//               ],
-//             ),
-//           ),
-//           SizedBox(height: 30),
-//           //Find more
-//           Container(
-//             margin: EdgeInsets.only(left: 20, right: 20),
-//             child: Row(
-//               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//               children: [
-//                 AppLargeText(
-//                   text: "Find more",
-//                   size: 22,
-//                   fontfamily: "Kaushan",
-//                   color: black,
-//                 ),
-//                 AppText(
-//                     text: "See all",
-//                     color: grey,
-//                     fontFamily: "Kaushan",
-//                     size: 14)
-//               ],
-//             ),
-//           ),
-//           SizedBox(height: 10),
-//           // Some icons in a row with name
-//           Container(
-//             height: 130,
-//             padding: EdgeInsets.only(left: 10, top: 20),
-//             child: ListView.builder(
-//               itemCount: smallTabs.length,
-//               scrollDirection: Axis.horizontal,
-//               itemBuilder: (context, i) {
-//                 return Container(
-//                   child: Column(
-//                     children: [
-//                       GestureDetector(
-//                         onTap: () {
-//                           Navigator.push(context, MaterialPageRoute(
-//                             builder: (context) {
-//                               return WriteMyStories();
-//                             },
-//                           ));
-//                         },
-//                         child: Container(
-//                           margin: EdgeInsets.only(left: 20, right: 20),
-//                           height: 80,
-//                           width: 80,
-//                           decoration: BoxDecoration(
-//                               borderRadius: BorderRadius.circular(20),
-//                               color: grey.withOpacity(0.1),
-//                               image: DecorationImage(
-//                                 image: AssetImage(smallTabs[i]["img"]),
-//                                 fit: BoxFit.fill,
-//                               )),
-//                         ),
-//                       ),
-//                       Expanded(
-//                         child: SingleChildScrollView(
-//                           child: Container(
-//                             margin: EdgeInsets.only(top: Sizes.screenHeight/60),
-//                             child: Center(
-//                                 child: Text(
-//                               smallTabs[i]["title"],
-//                               style: TextStyle(color: grey),
-//                             )),
-//                           ),
-//                         ),
-//                       )
-//                     ],
-//                   ),
-//                 );
-//               },
-//             ),
-//           )
-//         ],
-//       ),
-//     );
-//   }
-// }
 
 class CircleTabIndicator extends Decoration {
   final Color color;

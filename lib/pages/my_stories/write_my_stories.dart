@@ -26,7 +26,7 @@ class _WriteMyStoriesState extends State<WriteMyStories> {
         elevation: 0.0,
         centerTitle: true,
         toolbarHeight: Sizes.screenHeight / 13,
-        backgroundColor: const Color.fromARGB(255, 145, 20, 223),
+        backgroundColor: AppColors.themeColor,
         title: Text(
           "My Stories",
           style: TextStyle(
@@ -87,6 +87,7 @@ class _WriteMyStoriesState extends State<WriteMyStories> {
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
+        backgroundColor: AppColors.themeColor,
         onPressed: () {
           Navigator.push(context, MaterialPageRoute(builder: (context) {
             return const StoryEditor();

@@ -64,10 +64,10 @@ class _StoryReaderScreenState extends State<StoryReaderScreen> {
                     size: Sizes.smallButtonsize * 1.5,
                     onPressed: back,
                   ),
-                  AppText(
-                      text: !tapped ? "Read" : "Edit",
-                      color: Colors.black,
-                      size: Sizes.screenWidth / 15),
+                  Text(
+                    !tapped ? "Read" : "Edit",
+                    style: TextStyle(fontSize: Sizes.screenWidth / 15, fontWeight: FontWeight.bold,),
+                  ),
                   // Save Button
                   SmallButtonCircular(
                     bgColor: Colors.white,

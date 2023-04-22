@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:book_reader_app/colors/app_colors.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:book_reader_app/pages/bar_item_page.dart';
 import 'package:book_reader_app/pages/menu_page.dart';
@@ -33,26 +35,23 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBody: true,
       body: pages[currentIndex],
-      backgroundColor: Colors.white,
-      bottomNavigationBar: BottomNavigationBar(
+      backgroundColor: Colors.transparent,
+      bottomNavigationBar: CurvedNavigationBar(
         onTap: onTap,
-        selectedFontSize: 0,
-        unselectedFontSize: 0,
-        backgroundColor: Colors.white,
-        type: BottomNavigationBarType.shifting,
-        currentIndex: currentIndex,
-        selectedItemColor: Colors.black54,
-        unselectedItemColor: Colors.grey.withOpacity(0.8),
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        
+        color: AppColors.themeColor.withOpacity(0.6),
+        backgroundColor: Colors.transparent,
+        height: 50,
+        animationCurve: Curves.fastOutSlowIn,
+        index: currentIndex,
         items: [
-        BottomNavigationBarItem(label: "Home", icon: Icon(Icons.apps)),
-        BottomNavigationBarItem(label: "Search", icon: Icon(Icons.search)),
-        BottomNavigationBarItem(label: "Search", icon: Icon(Icons.book)),
-        BottomNavigationBarItem(label: "Me", icon: Icon(Icons.person)),
-      ]),
+          Icon(Icons.apps, size: 30),
+          Icon(Icons.search, size: 30),
+          Icon(Icons.book, size: 30),
+          Icon(Icons.person, size: 30),
+        ],
+      ),
     );
   }
 }
