@@ -19,6 +19,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     return Scaffold(
       body: StreamBuilder<QuerySnapshot>(
           stream:
@@ -40,14 +42,17 @@ class _HomePageState extends State<HomePage> {
                     width: double.maxFinite,
                     height: double.maxFinite,
                     decoration: BoxDecoration(
+                      // BackGround Image
                       image: DecorationImage(
                         image: NetworkImage(snapshot.data!.docs[i]['img']),
                         fit: BoxFit.cover,
                       ),
                     ),
                     child: Container(
-                      margin:
-                          const EdgeInsets.only(top: 40, left: 20, right: 20),
+                      margin: EdgeInsets.only(
+                          top: height / 70,
+                          left: width / 15,
+                          right: width / 20),
                       child: Column(
                         children: [
                           Row(
@@ -55,48 +60,49 @@ class _HomePageState extends State<HomePage> {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
+                                  SizedBox(height: height *0.007),
+                                  // Title
                                   AppLargeText(
                                     text: snapshot.data!.docs[i]['title'],
                                     fontfamily: "Samantha",
                                   ),
+                                  SizedBox(height: height / 50),
+                                  //SubTitle
                                   AppText(
                                     text: snapshot.data!.docs[i]['sub_title'],
+                                    size: height / 50,
                                     fontFamily: "Samantha",
                                   ),
-                                  SizedBox(height: 20),
-                                  Container(
-                                    width: 300,
+                                  // Description
+                                  SizedBox(height: height / 50),
+                                  SizedBox(
+                                    width: width * 0.8,
                                     child: AppText(
                                       text: snapshot.data!.docs[i]['text'],
-                                      size: 14,
+                                      size: height / 50,
                                       fontFamily: "Samantha",
                                     ),
                                   ),
-                                  SizedBox(height: 130),
                                 ],
                               ),
-                              SizedBox(width: 25),
+                              SizedBox(width: width * 0.025),
                               Column(
                                 children: [
-                                  Container(
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              4 /
-                                              20),
+                                  Container(height: height * 4 / 20),
                                   // Dot Indicator
                                   Column(
                                     children: List.generate(
                                         snapshot.data!.docs.length, (index) {
                                       return Container(
-                                        margin: EdgeInsets.only(bottom: 3),
-                                        width: 5,
-                                        height: (index == i) ? 25 : 8,
+                                        margin: EdgeInsets.only(bottom: height/200),
+                                        width: width * 0.013,
+                                        height: (index == i) ? height*0.03 : height * 0.009,
                                         decoration: BoxDecoration(
                                           borderRadius:
-                                              BorderRadius.circular(5),
+                                              BorderRadius.circular(width * 0.013 / 2),
                                           color: (index == i)
                                               ? Colors.white
-                                              : Colors.white.withOpacity(0.3),
+                                              : Colors.white.withOpacity(0.6),
                                         ),
                                       );
                                     }),
@@ -111,16 +117,16 @@ class _HomePageState extends State<HomePage> {
                               onTap: () {
                                 Navigator.push(context, MaterialPageRoute(
                                   builder: (context) {
-                                    return MainPage();
+                                    return const MainPage();
                                   },
                                 ));
                               },
                               child: Container(
-                                alignment: Alignment(1, 1),
+                                alignment: const Alignment(1, 1),
                                 child: Padding(
-                                    padding: EdgeInsets.only(bottom: 30),
+                                    padding: EdgeInsets.only(bottom: height * 0.03),
                                     child: ResponsiveButton(
-                                      width: 80,
+                                      width: width * 0.23,
                                       color: btnColors[i],
                                     )),
                               ),

@@ -1,11 +1,7 @@
 // ignore_for_file: must_be_immutable, avoid_print
 
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-
 import '../colors/app_colors.dart';
-import '../constants/sizes.dart';
 
 class AppText extends StatelessWidget {
   double size;
@@ -24,7 +20,7 @@ class AppText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (size == 16) {
-      size = Sizes.screenHeight / 52;
+      size = 16;
     }
     return Text(
       text,

@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../colors/app_colors.dart';
 import '../pages/my_stories/story_reader.dart';
 
 class PopupMenu extends StatelessWidget {
@@ -25,8 +27,8 @@ class PopupMenu extends StatelessWidget {
     final url =
         'mailto:$toEmail?subject=${Uri.encodeFull(subject)}&body=${Uri.encodeFull(message)}';
 
-    if (await canLaunch(url)) {
-      await launch(url);
+    if (await canLaunchUrl(Uri.parse(url))) {
+      await launchUrl((Uri.parse(url)));
     }
   }
 
@@ -40,11 +42,22 @@ class PopupMenu extends StatelessWidget {
       onSelected: (value) async {
         switch (value) {
           case "Delete":
-            FirebaseFirestore.instance
-                .collection("mystories")
-                .doc(doc["id"])
-                .delete();
-            break;
+            {
+              FirebaseFirestore.instance
+                  .collection("mystories")
+                  .doc(doc["id"])
+                  .delete();
+              Fluttertoast.showToast(
+                msg: "Deleted",
+                toastLength: Toast.LENGTH_LONG,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIosWeb: 2,
+                backgroundColor: AppColors.themeColor,
+                textColor: AppColors.white,
+                fontSize: 15,
+              );
+              break;
+            }
           case "Edit":
             Navigator.push(context, MaterialPageRoute(
               builder: (context) {

@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_unnecessary_containers, prefer_const_constructors
-
 import 'package:flutter/material.dart';
 
 class SearchPage extends StatelessWidget {
@@ -9,7 +7,7 @@ class SearchPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
-      child: Center(
+      child: const Center(
         child : Text("shshjd"),
       ),
     );
