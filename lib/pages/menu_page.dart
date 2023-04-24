@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:book_reader_app/pages/detail_pages/detail_page.dart';
 import 'package:book_reader_app/widgets/app_large_text.dart';
 import 'package:book_reader_app/widgets/app_text.dart';
+import 'package:get/get.dart';
 import 'menu_page_list_items.dart';
 
 class MenuPage extends StatefulWidget {
@@ -58,6 +59,9 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     TabController _tabController = TabController(length: 3, vsync: this);
 
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -72,7 +76,8 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
             padding: EdgeInsets.only(top: 30, left: 15, right: 15),
             child: Row(
               children: [
-                Icon(Icons.menu, size: Sizes.screenWidth/12, color: AppColors.themeColor),
+                Icon(Icons.menu,
+                    size: Sizes.screenWidth / 12, color: AppColors.themeColor),
                 Expanded(child: Container()),
                 Container(
                   margin: EdgeInsets.only(right: 5),
@@ -93,12 +98,34 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
           ),
           SizedBox(height: 30),
           //Discover
-          Padding(
-            padding: EdgeInsets.only(left: 15),
-            child: AppLargeText(
-              text: "Discover",
-              color: Colors.black,
-              fontfamily: "Kaushan",
+          Container(
+            margin: EdgeInsets.only(left: width * 0.01),
+            child: Wrap(
+              children: [
+                SizedBox(width: 20),
+                Container(
+                  height: height * 0.05,
+                  width: context.width * 0.41,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(context.height/2),
+                    color: AppColors.themeColor,
+                  ),
+                  child: Row(
+                    children: [
+                      SizedBox(width: width * 0.03),
+                      Padding(
+                        padding: EdgeInsets.only(left: context.width * 0.006),
+                        child: AppLargeText(
+                          text: "Discover",
+                          color: Colors.black,
+                          fontfamily: "Kaushan",
+                          size: width * 0.08,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
           ),
           SizedBox(height: 30),
@@ -171,16 +198,15 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Wrap(
-    
-                  children: [Container(
+                Wrap(children: [
+                  Container(
                     height: 35,
                     decoration: BoxDecoration(
-                      color: AppColors.themeColor,
-                      borderRadius: BorderRadius.circular(17.5)
-                    ),
+                        color: AppColors.themeColor,
+                        borderRadius: BorderRadius.circular(17.5)),
                     child: Padding(
-                      padding: const EdgeInsets.only(left: 8, right: 8, top: 3, bottom: 3),
+                      padding: const EdgeInsets.only(
+                          left: 8, right: 8, top: 3, bottom: 3),
                       child: AppLargeText(
                         text: "Find more",
                         size: 22,
@@ -188,8 +214,8 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
                         color: black,
                       ),
                     ),
-                  ),]
-                ),
+                  ),
+                ]),
                 AppText(
                     text: "See all",
                     color: grey,
@@ -257,7 +283,9 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
                                   child: Center(
                                       child: Text(
                                     doc["title"],
-                                    style: TextStyle(color: black, fontWeight: FontWeight.bold),
+                                    style: TextStyle(
+                                        color: black,
+                                        fontWeight: FontWeight.bold),
                                   )),
                                 ),
                               ),
