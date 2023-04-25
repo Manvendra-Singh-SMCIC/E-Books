@@ -11,6 +11,7 @@ import 'package:book_reader_app/pages/detail_pages/detail_page.dart';
 import 'package:book_reader_app/widgets/app_large_text.dart';
 import 'package:book_reader_app/widgets/app_text.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 import 'menu_page_list_items.dart';
 
 class MenuPage extends StatefulWidget {
@@ -57,7 +58,7 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    TabController _tabController = TabController(length: 3, vsync: this);
+    TabController _tabController = TabController(length: 2, vsync: this);
 
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
@@ -107,7 +108,7 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
                   height: height * 0.05,
                   width: context.width * 0.41,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(context.height/2),
+                    borderRadius: BorderRadius.circular(context.height / 2),
                     color: AppColors.themeColor,
                   ),
                   child: Row(
@@ -131,6 +132,7 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
           SizedBox(height: 30),
           //TabBar
           Container(
+            color: Colors.transparent,
             child: TabBar(
               labelPadding: EdgeInsets.only(left: 20, right: 0),
               labelColor: black,
@@ -139,9 +141,15 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
               indicatorSize: TabBarIndicatorSize.label,
               controller: _tabController,
               tabs: [
-                Tab(text: "Books"),
+                Container(
+                  decoration: BoxDecoration(
+                    color: AppColors.themeColor,
+                    borderRadius:
+                        BorderRadius.circular(context.height / 2),
+                  ),
+                  child: Center(child: Text("Books")),
+                ),
                 Tab(text: "Authors"),
-                Tab(text: "Genre"),
               ],
             ),
           ),
@@ -186,7 +194,6 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
                     return Center(child: Text("Offline"));
                   },
                 ),
-                Text("Hi"),
                 Text("Hi"),
               ],
             ),
@@ -251,7 +258,7 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
                               onTap: () {
                                 Navigator.push(context, MaterialPageRoute(
                                   builder: (context) {
-                                    return WriteMyStories();
+                                    return WriteSplash();
                                   },
                                 ));
                               },
@@ -330,5 +337,55 @@ class _CirclePainter extends BoxPainter {
         configuration.size!.width / 2 + 2 * radius,
         configuration.size!.height - radius * 2);
     canvas.drawCircle(offset + circleOffset, radius, _paint);
+  }
+}
+
+class WriteSplash extends StatefulWidget {
+  const WriteSplash({super.key});
+
+  @override
+  State<WriteSplash> createState() => _WriteSplashState();
+}
+
+class _WriteSplashState extends State<WriteSplash> {
+  @override
+  void initState() {
+    super.initState();
+    _navigateToWrite();
+  }
+
+  _navigateToWrite() async {
+    await Future.delayed(const Duration(milliseconds: 2500), () {});
+    Navigator.pushReplacement(context,
+        MaterialPageRoute(builder: (context) => const WriteMyStories()));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Container(
+          width: 500,
+          height: 500,
+          alignment: const Alignment(0, 1),
+          child: OverflowBox(
+            // child: AnimatedSplashScreen(
+            //   splash: Lottie.network(
+            //     "https://assets4.lottiefiles.com/packages/lf20_D7l6QPTtOL.json",
+            //     fit: BoxFit.cover,
+            //   ),
+            //   splashTransition: SplashTransition.scaleTransition,
+            //   pageTransitionType: PageTransitionType.fade,
+            //   nextScreen: const HomePage(),
+            //   duration: 3000,
+            // ),
+            child: Lottie.network(
+              "https://assets2.lottiefiles.com/packages/lf20_yswp4uj3.json",
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
