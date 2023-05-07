@@ -63,6 +63,8 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
 
+    int indexTab = 0;
+
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -108,7 +110,7 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
                   height: height * 0.05,
                   width: context.width * 0.41,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(context.height / 2),
+                    borderRadius: BorderRadius.circular(context.height/2),
                     color: AppColors.themeColor,
                   ),
                   child: Row(
@@ -134,6 +136,11 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
           Container(
             color: Colors.transparent,
             child: TabBar(
+              onTap: (value) {
+                setState(() {
+                  indexTab = value;
+                });
+              },
               labelPadding: EdgeInsets.only(left: 20, right: 0),
               labelColor: black,
               indicator:
@@ -141,14 +148,7 @@ class _MenuPageState extends State<MenuPage> with TickerProviderStateMixin {
               indicatorSize: TabBarIndicatorSize.label,
               controller: _tabController,
               tabs: [
-                Container(
-                  decoration: BoxDecoration(
-                    color: AppColors.themeColor,
-                    borderRadius:
-                        BorderRadius.circular(context.height / 2),
-                  ),
-                  child: Center(child: Text("Books")),
-                ),
+                Tab(text: "Books"),
                 Tab(text: "Authors"),
               ],
             ),
@@ -356,8 +356,7 @@ class _WriteSplashState extends State<WriteSplash> {
 
   _navigateToWrite() async {
     await Future.delayed(const Duration(milliseconds: 2500), () {});
-    Navigator.pushReplacement(context,
-        MaterialPageRoute(builder: (context) => const WriteMyStories()));
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const WriteMyStories()));
   }
 
   @override
@@ -367,7 +366,7 @@ class _WriteSplashState extends State<WriteSplash> {
         child: Container(
           width: 500,
           height: 500,
-          alignment: const Alignment(0, 1),
+          alignment: const Alignment(0,1),
           child: OverflowBox(
             // child: AnimatedSplashScreen(
             //   splash: Lottie.network(
@@ -380,9 +379,9 @@ class _WriteSplashState extends State<WriteSplash> {
             //   duration: 3000,
             // ),
             child: Lottie.network(
-              "https://assets2.lottiefiles.com/packages/lf20_yswp4uj3.json",
-              fit: BoxFit.cover,
-            ),
+                "https://assets2.lottiefiles.com/packages/lf20_yswp4uj3.json",
+                fit: BoxFit.cover,
+              ),
           ),
         ),
       ),

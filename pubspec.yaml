@@ -46,7 +46,7 @@ dependencies:
   transparent_image: ^2.0.1
   http: ^0.13.5
   url_launcher: ^6.1.10
-  sqflite: ^2.2.6
+  sqflite: ^2.2.7
   path_provider: ^2.0.14
   path: ^1.8.2
   connectivity: ^3.0.6
@@ -67,6 +67,9 @@ dependencies:
   animated_splash_screen:
   page_transition:
   lottie:
+  firebase_database: ^10.1.1
+  redux: ^5.0.0
+  flutter_redux: ^0.10.0
 
 dev_dependencies:
   flutter_test:
